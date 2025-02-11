@@ -1,3 +1,5 @@
+-- This is the donations table
+
 CREATE TABLE donations (
     id INT PRIMARY KEY AUTO_INCREMENT,
     donation_id VARCHAR(20) UNIQUE NOT NULL,
