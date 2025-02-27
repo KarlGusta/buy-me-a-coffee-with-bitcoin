@@ -57,6 +57,11 @@ CREATE TABLE donations (
 
 -- Payment addresses table
 CREATE TABLE payment_addresses (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    
+    id INT AUTO_INCREMENT PRIMARY KEY,    
+    wallet_id INT NOT NULL,
+    address VARCHAR(255) NOT NULL UNIQUE,
+    is_used BOOLEAN DEFAULT FALSE,
+    tx_hash VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT 
 );
