@@ -63,5 +63,23 @@ CREATE TABLE payment_addresses (
     is_used BOOLEAN DEFAULT FALSE,
     tx_hash VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT 
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (wallet_id) REFERENCES bitcoin_wallets(id) ON DELETE CASCADE 
 );
+
+-- Setting table
+CREATE TABLE settings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    setting_name VARCHAR(100) NOT NULL UNIQUE,
+    setting_value TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP 
+);
+
+-- Insert default settings
+INSERT INTO settings (setting_name, setting_value) VALUES
+('bitcoin_price_api', 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd'),
+('site_name', 'Bitcoin Coffee'),
+('site_description', 'Support creators with Bitcoin donations'),
+('min_donation', '0.0001'),
+('confirmation_threshold', '3');
