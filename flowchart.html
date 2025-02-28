@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bitcoin Buy Me a Coffee App Flow Chart</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+      background-color: #f5f5f5;
+    }
+    h1, h2, h3 {
+      color: #333;
+    }
+    .flowchart {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .section {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+    .box {
+      background-color: #e3f2fd;
+      border: 1px solid #2196F3;
+      border-radius: 4px;
+      padding: 8px 15px;
+      margin: 5px 0;
+      display: inline-block;
+      min-width: 150px;
+      text-align: center;
+    }
+    .decision {
+      background-color: #fff8e1;
+      border: 1px solid #ffc107;
+      border-radius: 4px;
+      padding: 8px 15px;
+      margin: 5px 0;
+      display: inline-block;
+      min-width: 150px;
+      text-align: center;
+    }
+    .database {
+      background-color: #e8f5e9;
+      border: 1px solid #4caf50;
+      border-radius: 4px;
+      padding: 8px 15px;
+      margin: 5px 0;
+      display: inline-block;
+      min-width: 150px;
+      text-align: center;
+    }
+    .flow {
+      display: flex;
+      align-items: center;
+      margin: 5px 0;
+    }
+    .arrow {
+      margin: 0 10px;
+      font-size: 24px;
+      color: #555;
+    }
+    .nested {
+      margin-left: 40px;
+    }
+    .header {
+      background-color: #2196F3;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 4px;
+      margin-bottom: 15px;
+    }
+    @media print {
+      body {
+        background-color: white;
+      }
+      .flowchart, .section {
+        box-shadow: none;
+        border: 1px solid #ddd;
+      }
+      .no-print {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="flowchart">
+    <div class="header">
+      <h1>Self-Custodial Bitcoin Buy Me a Coffee App Flow Chart</h1>
+      <p>PHP, MySQL, HTML Architecture with MVC Pattern</p>
+    </div>
+
+    <h2>User Authentication Flow</h2>
+    <div class="section">
+      <div class="flow">
+        <div class="box">User Visits Website</div>
+        <div class="arrow">→</div>
+        <div class="decision">Has Account?</div>
+      </div>
+      
+      <div class="nested">
+        <div class="flow">
+          <div class="box">Sign Up View</div>
+          <div class="arrow">→</div>
+          <div class="box">Registration Handler</div>
+          <div class="arrow">→</div>
+          <div class="box">User Class: create</div>
+          <div class="arrow">→</div>
+          <div class="database">MySQL: Users Table</div>
+        </div>
+        
+        <div class="flow">
+          <div class="box">Login View</div>
+          <div class="arrow">→</div>
+          <div class="box">Login Handler</div>
+          <div class="arrow">→</div>
+          <div class="box">User Class: authenticate</div>
+          <div class="arrow">→</div>
+          <div class="decision">Valid Login?</div>
+        </div>
+        
+        <div class="nested">
+          <div class="flow">
+            <div class="decision">Valid Login?</div>
+            <div class="arrow">→</div>
+            <div class="box">Dashboard View</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Dashboard & Profile Management</h2>
+    <div class="section">
+      <div class="flow">
+        <div class="box">Dashboard View</div>
+      </div>
+      
+      <div class="nested">
+        <div class="flow">
+          <div class="box">Creator Profile View</div>
+          <div class="arrow">→</div>
+          <div class="box">Profile Handler</div>
+          <div class="arrow">→</div>
+          <div class="box">Creator Class: update</div>
+          <div class="arrow">→</div>
+          <div class="database">MySQL: Creators Table</div>
+        </div>
+        
+        <div class="flow">
+          <div class="box">Wallet Management View</div>
+          <div class="arrow">→</div>
+          <div class="box">Wallet Handler</div>
+          <div class="arrow">→</div>
+          <div class="box">Bitcoin Wallet Class</div>
+        </div>
+        
+        <div class="nested">
+          <div class="flow">
+            <div class="decision">Action Type?</div>
+          </div>
+          
+          <div class="nested">
+            <div class="flow">
+              <div class="box">Generate New Address</div>
+              <div class="arrow">→</div>
+              <div class="database">MySQL: Wallets Table</div>
+            </div>
+            
+            <div class="flow">
+              <div class="box">Check BTC Balance</div>
+              <div class="arrow">→</div>
+              <div class="database">MySQL: Wallets Table</div>
+            </div>
+            
+            <div class="flow">
+              <div class="box">Initiate Withdrawal</div>
+              <div class="arrow">→</div>
+              <div class="database">MySQL: Wallets Table</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flow">
+          <div class="box">Transaction History View</div>
+          <div class="arrow">→</div>
+          <div class="database">MySQL: Transactions Table</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Supporter Flow</h2>
+    <div class="section">
+      <div class="flow">
+        <div class="box">Supporter Visits Creator Page</div>
+        <div class="arrow">→</div>
+        <div class="box">Creator Public Profile View</div>
+        <div class="arrow">→</div>
+        <div class="box">Support Form View</div>
+      </div>
+      
+      <div class="nested">
+        <div class="flow">
+          <div class="box">Payment Handler</div>
+          <div class="arrow">→</div>
+          <div class="box">Transaction Class: create</div>
+          <div class="arrow">→</div>
+          <div class="database">MySQL: Transactions Table</div>
+        </div>
+        
+        <div class="flow">
+          <div class="box">Bitcoin Payment Processing</div>
+          <div class="arrow">→</div>
+          <div class="box">Generate Payment Request</div>
+          <div class="arrow">→</div>
+          <div class="box">Display Bitcoin Address & Amount</div>
+        </div>
+        
+        <div class="flow">
+          <div class="box">Payment Confirmation View</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Transaction Verification</h2>
+    <div class="section">
+      <div class="flow">
+        <div class="box">Bitcoin Node/Service</div>
+        <div class="arrow">→</div>
+        <div class="box">Transaction Verification Process</div>
+        <div class="arrow">→</div>
+        <div class="box">Webhook Handler</div>
+      </div>
+      
+      <div class="nested">
+        <div class="flow">
+          <div class="box">Transaction Class: update</div>
+          <div class="arrow">→</div>
+          <div class="database">MySQL: Transactions Table</div>
+        </div>
+        
+        <div class="flow">
+          <div class="box">Notification Handler</div>
+        </div>
+        
+        <div class="nested">
+          <div class="flow">
+            <div class="box">Email Notification</div>
+          </div>
+          
+          <div class="flow">
+            <div class="box">Dashboard Notification View</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Database Schema</h2>
+    <div class="section">
+      <div class="flow">
+        <div class="database">Users Table</div>
+      </div>
+      <div class="flow">
+        <div class="database">Creators Table</div>
+      </div>
+      <div class="flow">
+        <div class="database">Wallets Table</div>
+      </div>
+      <div class="flow">
+        <div class="database">Transactions Table</div>
+      </div>
+      <div class="flow">
+        <div class="database">Notifications Table</div>
+      </div>
+    </div>
+
+    <h2>MVC Architecture</h2>
+    <div class="section">
+      <div class="flow">
+        <div class="box">Views</div>
+        <div class="arrow">→</div>
+        <div class="box">Handlers</div>
+        <div class="arrow">→</div>
+        <div class="box">Classes</div>
+        <div class="arrow">→</div>
+        <div class="database">Database</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
