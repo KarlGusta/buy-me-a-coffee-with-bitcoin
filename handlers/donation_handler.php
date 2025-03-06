@@ -94,3 +94,75 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     header("Location: " . BASE_URL . "/payment.php");
     exit;
 }
+
+// Handle confirming a Bitcoin payment
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'confirm_payment') {
+    // Check if we have pending donation
+    if (!isset($_SESSION['pending_donation'])) {
+        $_SESSION['error'] = "No pending donation found";
+        header("Location: " . BASE_URL);
+        exit;
+    }
+
+    $pending = $_SESSION['pending_donation'];
+    $tx_hash = $_POST['tx_hash'] ?? '';
+
+    // Validate transaction hash
+    if (!$tx_hash || !preg_match('/^[a-fA-F0-9]{64}$/', $tx_hash)) {
+        $_SESSION['error'] = "Invalid transaction hash";
+        header("Location: " . BASE_URL . "/payment.php");
+        exit;
+    }
+
+    // Verify transaction on blockchain
+    $tx_info = get_transaction_info($tx_hash);
+
+    if (!$tx_info) {
+        $_SESSION['error'] = "Could not verify transaction. Please try again later.";
+        header("Location: " . BASE_URL . "/payment.php");
+        exit;
+    }
+
+    // Verify payment details
+    $valid_tx = verify_transaction(
+        $tx_hash,
+        $pending['payment_address'],
+        $pending['bitcoin_amount']
+    );
+
+    if (!$valid_tx) {
+        $_SESSION['error'] = "Transaction verification failed. Please ensure you sent the correct amount to the correct address.";
+        header("Location: " . BASE_URL . "/payment.php");
+        exit;
+    }
+
+    // Create donation record
+    $donation = new Donation([
+        'donor_id' => isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null,
+        'creator_id' => $pending['creator_id'],
+        'amount' => $pending['amount'],
+        'bitcoin_amount' => $pending['bitcoin_amount'],
+        'tx_hash' => $tx_hash,
+        'message' => $pending['message'],
+        'is_anonymous' => $pending['is_anonymous'],
+        'status' => 'pending',
+        'confirmations' => $tx_info['confirmations'] ?? 0
+    ]);
+
+    if (!$donation->create()) {
+        $_SESSION['error'] = "Failed to record donation. Please contact support.";
+        header("Location: " . BASE_URL . "/payment.php");
+        exit;
+    }
+
+    // Mark address as used
+    $creator = Creator::getById($pending['creator_id']);
+    $wallet = BitcoinWallet::getPrimaryForUser($creator->getUserId());
+    $wallet->markAddressAsUsed($pending['payment_address'], $tx_hash);
+
+    // Clear pending donation
+    unset($_SESSION['pending_donation']);
+
+    // Set success message
+    $_SESSION['success'] = "Thank you for your donation to " . $pending['creator_name'] . "!";
+}
