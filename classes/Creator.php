@@ -157,6 +157,83 @@ class Creator {
                 ORDER BY c.is_featured DESC, c.created_at DESC
                 LIMIT ? OFFSET ?";
 
-        $search_param = "%{$query}%";        
+        $search_param = "%{$query}%";
+        $creators_data = $db->getRows($sql, [$search_param, $search_param, $search_param, $limit, $offset]);
+        
+        $creators = [];
+        foreach ($creators_data as $creator_data) {
+            $creators[] = new Creator($creator_data);
+        }
+
+        return $creators;
+    }
+
+    // Get all creators
+    public static function getAll($limit = 20, $offset = 0) {
+        $db = Database::getInstance();
+        $sql = "SELECT c.*, u.username
+                FROM creators c
+                JOIN users u ON c.user_id = u.id
+                ORDER BY c.is_featured DESC, c.created_at DESC
+                LIMIT ? OFFSET ?";
+
+        $creators_data = $db->getRows($sql, [$limit, $offset]);
+        
+        $creators = [];
+        foreach ($creators_data as $creator_data) {
+            $creators[] = new Creator($creator_data);
+        }
+
+        return $creators;
+    }
+
+    // Getters
+    public function getId() {
+        return $this->id;
+    }
+
+    public function getUserId() {
+        return $this->user_id;
+    }
+
+    public function getDisplayName() {
+        return $this->display_name;
+    }
+
+    public function getBio() {
+        return $this->bio;
+    }
+
+    public function getProfileImage() {
+        return $this->profile_image;
+    }
+
+    public function isFeatured() {
+        return (bool)$this->is_featured;
+    }
+
+    public function getCoffeePrice() {
+        return $this->coffee_price;
+    }
+
+    public function getCreatedAt() {
+        return $this->created_at;
+    }
+
+    // Setters
+    public function setDisplayName($display_name) {
+        $this->display_name = $display_name;
+    }
+
+    public function setBio($bio) {
+        $this->bio = $bio;
+    }
+
+    public function setProfileImage($profile_image) {
+        $this->profile_image = $profile_image;
+    }
+
+    public function setCoffeePrice($coffee_price) {
+        $this->coffee_price = $coffee_price;
     }
 }
