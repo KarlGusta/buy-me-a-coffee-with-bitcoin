@@ -27,6 +27,35 @@ require_once __DIR__ . '/layout/header.php';
                 </div>    
                 <?php endif; ?>
             </div>
+
+            <div class="col-md-5">
+                <div class="hero-stats">
+                    <div class="stats-card">
+                        <div class="stats-number"><?= number_format($creator_count) ?></div>
+                        <div class="stats-label">Creators</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-number"><?= number_format($donation_stats['count'] ?? 0) ?></div>
+                        <div class="stats-label">Donations</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-number"><?= format_currency($donation_stats['total'] ?? 0) ?></div>
+                        <div class="stats-label">Total Support</div>
+                    </div>
+                </div>
+
+                <!-- Bitcoin Address QR -->
+                 <div class="bitcoin-demo">
+                    <h4>How it works</h4>
+                    <p>1. Find a creator you want to support</p>
+                    <p>2. Send Bitcoin directly to their wallet</p>
+                    <p>3. 100% of your donation goes to the creator</p>
+
+                    <div class="qr-example">
+                        <img src="<?= BASE_URL ?>/assets/images/qr-example.png" alt="">
+                    </div>
+                 </div>
+            </div>
         </div>
     </div>
 </div>
