@@ -55,10 +55,27 @@
                                 <a class="nav-link" href="<?= BASE_URL ?>/become-creator.php">Become a Creator</a>
                             </li>
                         <?php endif; ?>    
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-user"></i> My Account
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="<?= BASE_URL ?>/profile.php">Profile</a></li>
+                                <li><a class="dropdown-item" href="<?= BASE_URL ?>/wallet.php">My Wallet</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="<?= BASE_URL ?>/logout.php"></a></li>
+                            </ul>
+                        </li>
+                    <?php endif; ?>    
                 </ul>
             </div>
         </div>
     </nav>
+
+    <div class="container mt-4">
+        <!-- Flash messages -->
+         <?= flash_message() ?>
+    </div>
 </body>
 
 </html>
